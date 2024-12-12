@@ -3,19 +3,23 @@ import os
 
 class ticket():
     def lotto():
-        number = [input("Choose a number from 1-70: ") for _ in range(5)]
-        return tuple(number)
+        guess = [input("Choose a number from 1-70: ") for _ in range(5)] #Chatgpt made it loop 5 times instead of 5 lines of the same code
+        return tuple(guess)
     def rlotto():
         numbers = list(range(1,71))    
         random_number = [random.choice(numbers) for _ in range(5)]
         print(random_number)
-    def reveal(number, random_number):
-        for i in number:
-            if i == random_number:
+        return random_number
+    def reveal():
+        for i in guessing:
+            if i == real:
                 print("cool")
-            elif i != random_number:
+            elif i != real:
                 print("lose")
-    lotto()
+real = ticket.rlotto()
+guessing = ticket.lotto()
+
+show = ticket.reveal()
 
 
 
