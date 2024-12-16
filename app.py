@@ -25,8 +25,8 @@ class RouletteWheel():
         self.text_color = (200, 155, 110)  
 
         # Define the hitbox (x, y, width, height)
-        self.hitbox = pygame.Rect(200, 200, 200, 200)  # Example position and size for the hitbox
-
+        self.hitbox = pygame.Rect(1128, 750, 160, 120)  # Example position and size for the hitbox
+        self.hitbox2 = pygame.Rect(1228, 750, 160, 120)
     def textRender(self):
         running = True
         while running:
@@ -38,7 +38,8 @@ class RouletteWheel():
                     mouse_pos = pygame.mouse.get_pos()
                     if self.hitbox.collidepoint(mouse_pos):  # Check if the mouse click is inside the hitbox
                         self.on_hitbox_click()  # Trigger the action
-
+                    if self.hitbox2.collidepoint(mouse_pos):
+                        self.on_hitbox2_click()
             # Blit the background image to the screen
             self.screen.blit(self.roulette_image, (0, 0))
 
@@ -46,13 +47,10 @@ class RouletteWheel():
             text = self.font.render('Welcome to the Roulette table.', True, self.text_color)
             self.screen.blit(text, (590, 100))
 
-            # Draw the hitbox (for visualization)
-            pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox, 2)  # Red color for hitbox boundary
-
-            # Update the display
+            pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox, 2)
+            pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox2, 2)
             pygame.display.update()
 
-        # Quit Pygame
         pygame.quit()
         sys.exit()
 
