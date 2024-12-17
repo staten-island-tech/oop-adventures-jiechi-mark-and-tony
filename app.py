@@ -26,10 +26,19 @@ class RouletteWheel():
 
         # Define the hitbox (x, y, width, height)
         self.hitbox = pygame.Rect(1128, 750, 160, 120)  # Example position and size for the hitbox
-        self.hitbox2 = pygame.Rect(1228, 750, 160, 120)
+        self.hitbox2 = pygame.Rect(1290, 750, 160, 120)
+        self.hitbox3 = pygame.Rect(966, 750, 160, 120)
+        self.hitbox4 = pygame.Rect(1452, 750, 160, 120)
+
     def textRender(self):
         running = True
+        text = "Welcome to the Roulette table."
+        current_text = ""  # Empty string to store progressively printed text
+        text_displayed_time = 0  # Track the time since text was fully displayed
+        start_time = pygame.time.get_ticks()  # Start time for slow printing
+
         while running:
+            # Event handling
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -40,15 +49,35 @@ class RouletteWheel():
                         self.on_hitbox_click()  # Trigger the action
                     if self.hitbox2.collidepoint(mouse_pos):
                         self.on_hitbox2_click()
+                    if self.hitbox3.collidepoint(mouse_pos):
+                        self.on_hitbox3_click()
+                    if self.hitbox4.collidepoint(mouse_pos):
+                        self.on_hitbox4_click()
+
             # Blit the background image to the screen
             self.screen.blit(self.roulette_image, (0, 0))
 
+            # Print text character by character (slow printing)
+            if len(current_text) < len(text) and pygame.time.get_ticks() - start_time > 100 * len(current_text):
+                current_text += text[len(current_text)]  # Add next character
+                start_time = pygame.time.get_ticks()  # Reset start time after printing a character
+            
             # Render the text
-            text = self.font.render('Welcome to the Roulette table.', True, self.text_color)
-            self.screen.blit(text, (590, 100))
+            text_surface = self.font.render(current_text, True, self.text_color)
+            self.screen.blit(text_surface, (590, 100))
 
+            # Set the timer for disappearing text (after 5 seconds)
+            if text_displayed_time > 2000:  
+                current_text = ""
+
+            text_displayed_time = pygame.time.get_ticks() - start_time
+
+            # Draw hitboxes
             pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox, 2)
             pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox2, 2)
+            pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox3, 2)
+            pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox4, 2)
+
             pygame.display.update()
 
         pygame.quit()
