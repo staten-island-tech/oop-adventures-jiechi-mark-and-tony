@@ -5,7 +5,7 @@ class ticket():
         self.guess = []
         self.random_number = []
     def lotto(self):
-        self.guess = [input("Choose a number from 1-70:") for _ in range(5)] #Chatgpt made it loop 5 times instead of 5 lines of the same code
+        self.guess = [input("Choose a number from 1-70: ") for _ in range(5)] #Chatgpt made it loop 5 times instead of 5 lines of the same code
         return self.guess
     def rlotto(self):
         self.random_number = [random.choice(numbers) for _ in range(5)]
