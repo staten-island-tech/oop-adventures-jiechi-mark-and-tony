@@ -1,22 +1,25 @@
 import random
-
+numbers = list(range(1,71)) 
 class ticket():
-    def lotto():
-        guess = [input("Choose a number from 1-70: ") for _ in range(5)] #Chatgpt made it loop 5 times instead of 5 lines of the same code
-        return guess
-    def rlotto():
-        numbers = list(range(1,71))    
-        random_number = [random.choice(numbers) for _ in range(5)]
-        print(random_number)
-        return random_number
-    def reveal():
-        if guess == real:
+    def __init__(self):
+        self.guess = []
+        self.random_number = []
+    def lotto(self):
+        self.guess = [input("Choose a number from 1-70:") for _ in range(5)] #Chatgpt made it loop 5 times instead of 5 lines of the same code
+        return self.guess
+    def rlotto(self):
+        self.random_number = [random.choice(numbers) for _ in range(5)]
+        print(self.random_number)
+        return self.random_number
+    def reveal(self):
+        if self.guess == self.random_number:
             print("win")
-        elif guess != real:
+        elif self.guess != self.random_number:
             print("lose")
-real = ticket.rlotto()
-guess = ticket.lotto()
-show = ticket.reveal()
+tickets = ticket()
+tickets.rlotto()
+tickets.lotto()
+tickets.reveal()
 
 
 
