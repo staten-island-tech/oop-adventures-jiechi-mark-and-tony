@@ -32,10 +32,15 @@ class RouletteWheel():
 
     def textRender(self):
         running = True
-        text = "Welcome to the Roulette table."
+        text_list = [
+            "Welcome to the Roulette table",
+            "To place a bet click on the boxes highlighted in blue"
+        ]
+        text_index = 0  # Start with the first text
         current_text = ""  # Empty string to store progressively printed text
-        text_displayed_time = 0  # Track the time since text was fully displayed
         start_time = pygame.time.get_ticks()  # Start time for slow printing
+        text_displayed_time = 0  # Track the time since text was fully displayed
+        text_duration = 5000  # Time in milliseconds for how long the text stays on screen
 
         while running:
             # Event handling
@@ -57,20 +62,27 @@ class RouletteWheel():
             # Blit the background image to the screen
             self.screen.blit(self.roulette_image, (0, 0))
 
-            # Print text character by character (slow printing)
-            if len(current_text) < len(text) and pygame.time.get_ticks() - start_time > 100 * len(current_text):
-                current_text += text[len(current_text)]  # Add next character
+            # Print the current text character by character (slow printing)
+            if len(current_text) < len(text_list[text_index]) and pygame.time.get_ticks() - start_time > 10 * len(current_text):
+                current_text += text_list[text_index][len(current_text)]  # Add next character
                 start_time = pygame.time.get_ticks()  # Reset start time after printing a character
-            
+
             # Render the text
             text_surface = self.font.render(current_text, True, self.text_color)
             self.screen.blit(text_surface, (590, 100))
 
-            # Set the timer for disappearing text (after 5 seconds)
-            if text_displayed_time > 2000:  
-                current_text = ""
+            # Check if the text has been displayed long enough (e.g., 5 seconds)
+            if text_displayed_time > text_duration:
+                # Move to the next text in the list
+                text_index += 1
+                current_text = ""  # Reset current text to print the next one
+                text_displayed_time = 0  # Reset the timer
 
             text_displayed_time = pygame.time.get_ticks() - start_time
+
+            # If all texts have been shown, exit the loop
+            if text_index >= len(text_list):
+                running = False
 
             # Draw hitboxes
             pygame.draw.rect(self.screen, (0, 0, 255), self.hitbox, 2)
@@ -81,10 +93,15 @@ class RouletteWheel():
             pygame.display.update()
 
         pygame.quit()
-        sys.exit()
 
     def on_hitbox_click(self):
-        print("Hitbox clicked!")
+        print("In on red")
+    def on_hitbox2_click(self):
+        print("In on black")
+    def on_hitbox3_click(self):
+        print("In on even")
+    def on_hitbox4_click(self):
+        print("In on odd")
 
 if __name__ == "__main__":
     roulette = RouletteWheel()
