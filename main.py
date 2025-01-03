@@ -1,3 +1,6 @@
 import random
-import sys
 import pygame
+import background
+import ticket
+
+
