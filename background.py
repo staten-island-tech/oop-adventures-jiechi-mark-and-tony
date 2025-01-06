@@ -9,7 +9,7 @@ screen_height = 1017
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 # Set window title
-pygame.display.set_caption("Custom Background Example")
+pygame.display.set_caption("Background")
 
 # Load a custom background image
 background_image = pygame.image.load('backgroundwhite.jpg')  # Make sure the image path is correct
