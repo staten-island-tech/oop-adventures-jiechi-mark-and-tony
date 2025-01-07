@@ -33,7 +33,7 @@ class RouletteWheel():
         self.bet_500 = pygame.Rect(700, 925, 150, 60)
         self.bet_1000 = pygame.Rect(900, 925, 150, 60)
 
-        self.balance = 1000
+        self.balance = 100000
         self.bet = 50 
 
     def textRender(self):
