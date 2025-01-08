@@ -1,7 +1,7 @@
 import pygame
 import random
 import sys
-
+from lottery import Tickets
 # Initialize Pygame
 pygame.init()
 
@@ -24,25 +24,8 @@ NUMBERS = list(range(1, 71))  # Numbers from 1 to 70
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Lottery Game")
 
-class Ticket():
-    def __init__(self, guesses=5):
-        self.guesses = guesses
-        self.guess = []
-        self.random_number = []
-        self.guessing = True
 
-    def rlotto(self):
-        # Generate 5 random unique numbers
-        self.random_number = random.sample(range(1, 71), self.guesses)
-
-    def reveal(self):
-        # Sort both lists for comparison (since order doesn't matter)
-        if sorted(self.guess) == sorted(self.random_number):
-            return True
-        else:
-            return False
-
-ticket = Ticket()
+ticket = Tickets()
 
 # Function to draw the lottery numbers
 def draw_numbers():

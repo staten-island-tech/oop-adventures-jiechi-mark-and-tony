@@ -1,6 +1,6 @@
 import random
-numbers = list(range(1,71))
-class ticket():
+"""numbers = list(range(1,71))
+class Ticket():
     def __init__(self, guesses=5):
         self.guesses = guesses
         self.guess = []
@@ -10,12 +10,12 @@ class ticket():
             try:
                 self.guess = []
                 for _ in range(self.guesses):
-                    guessing = int(input("Choose a number from 1-70: ")) #Chatgpt made it loop 5 times instead of 5 lines of the same code   
+                    guessing = int(input("Choose a number from 1-70: "))  
                     if 1 <= guessing <= 70:
                         self.guess.append(guessing)
                     else:
                         print("Enter a valid input 1-70 ")
-                if len(self.guess) == 5:
+                if len(self.guess) == 5:#Chatgpt made it loop 5 times instead of 5 lines of the same code  
                     break
                 else:
                     print("Please choose 5 unique numbers.")
@@ -30,9 +30,25 @@ class ticket():
             print("win")
         else:
             print("lose")
-tickets = ticket()
+tickets = Ticket()
 tickets.rlotto()
 tickets.lotto()
-tickets.reveal()
+tickets.reveal() """
+class Tickets():
+    def __init__(self, guesses=5):
+        self.guesses = guesses
+        self.guess = []
+        self.random_number = []
+        self.guessing = True
 
+    def rlotto(self):
+        # Generate 5 random unique numbers
+        self.random_number = random.sample(range(1, 71), self.guesses)
 
+    def reveal(self):
+        # Sort both lists for comparison (since order doesn't matter)
+        if sorted(self.guess) == sorted(self.random_number):
+            return True
+        else:
+            return False
+ticket = Tickets()
