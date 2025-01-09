@@ -58,7 +58,7 @@ def draw_random_numbers():
     for i, num in enumerate(ticket.random_number):
         x = start_x + i * (NUM_SIZE + NUM_MARGIN)  # Calculate the position for each number
         y = SCREEN_HEIGHT - NUM_SIZE - NUM_MARGIN  # Position them at the bottom
-        pygame.draw.rect(screen, YELLOW, (x, y, NUM_SIZE, NUM_SIZE))
+        pygame.draw.rect(screen, RED, (x, y, NUM_SIZE, NUM_SIZE))
         pygame.draw.rect(screen, BLUE, (x, y, NUM_SIZE, NUM_SIZE), 2)  # Border
         text_surface = FONT.render(str(num), True, WHITE)
         screen.blit(text_surface, (x + (NUM_SIZE - text_surface.get_width()) // 2, 
