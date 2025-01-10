@@ -48,18 +48,14 @@ class RouletteWheel():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
 
-                    if self.hitbox.collidepoint(mouse_pos):
-                        result_text = self.on_hitbox_click()
-                        result_displayed = True
-                    if self.hitbox2.collidepoint(mouse_pos):
-                        result_text = self.on_hitbox2_click()
-                        result_displayed = True
-                    if self.hitbox3.collidepoint(mouse_pos):
-                        result_text = self.on_hitbox3_click()
-                        result_displayed = True
-                    if self.hitbox4.collidepoint(mouse_pos):
-                        result_text = self.on_hitbox4_click()
-                        result_displayed = True
+                    hitboxes = [self.hitbox, self.hitbox2, self.hitbox3, self.hitbox4]
+                    bet_types = ["red", "black", "even", "odd"]
+
+                    for hitbox, bet_type in zip(hitboxes, bet_types):
+                        if hitbox.collidepoint(mouse_pos):
+                            result_text = self.on_hitbox_click(bet_type)
+                            result_displayed = True
+                            break
 
                     if self.bet_50.collidepoint(mouse_pos) and self.balance >= 50:
                         self.bet = 50
@@ -119,37 +115,13 @@ class RouletteWheel():
         text_rect = text_surface.get_rect(center=rect.center)
         self.screen.blit(text_surface, text_rect)
 
-    def on_hitbox_click(self):
+    def on_hitbox_click(self, bet_type):
         result = random.choice(["Winner", "Loss", "Loss"])
         if result == "Winner":
             self.balance += self.bet
         else:
             self.balance -= self.bet
-        return f"In on red: {result}"
-    
-    def on_hitbox2_click(self):
-        result = random.choice(["Winner", "Loss", "Loss"])
-        if result == "Winner":
-            self.balance += self.bet
-        else:
-            self.balance -= self.bet
-        return f"In on black: {result}"
-    
-    def on_hitbox3_click(self):
-        result = random.choice(["Winner", "Loss", "Loss"])
-        if result == "Winner":
-            self.balance += self.bet
-        else:
-            self.balance -= self.bet
-        return f"In on even: {result}"
-    
-    def on_hitbox4_click(self):
-        result = random.choice(["Winner", "Loss", "Loss"])
-        if result == "Winner":
-            self.balance += self.bet
-        else:
-            self.balance -= self.bet
-        return f"In on odd: {result}"
+        return f"In on {bet_type}: {result}"
 
     def display_game_over(self):
         game_over_text = "Game Over"
