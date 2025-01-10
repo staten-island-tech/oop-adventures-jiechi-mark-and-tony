@@ -241,7 +241,7 @@ def main():
     # Define hitboxes for buttons (but no longer draw rectangles or text)
     withdraw_button_rect = pygame.Rect(20, 100, 600, 150)  # Moved down and left
     deposit_button_rect = pygame.Rect(ROULETTE_WIDTH - 800, 100, 600, 150)  # Moved down and right
-    roulette_button_rect = pygame.Rect(500, 600, 200, 100)  # Hitbox for roulette button
+    roulette_button_rect = pygame.Rect(1500, 600, 400, 150)  # Hitbox for roulette button
 
 
     while True:
