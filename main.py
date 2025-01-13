@@ -1,7 +1,7 @@
 import pygame
 import random
 import sys
-from lottery import Tickets
+
 # Initialize Pygame
 pygame.init()
 
@@ -19,11 +19,28 @@ NUM_MARGIN = 10
 ROWS = 10
 COLS = 7
 NUMBERS = list(range(1, 71))  # Numbers from 1 to 70
+TICKET_COST = 10  # Cost per ticket
+STARTING_MONEY = 100  # Starting money for the player
 
 # Create screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Lottery Game")
 
+class Tickets():
+    def __init__(self, guesses=5):
+        self.guesses = guesses
+        self.guess = []
+        self.random_number = []
+        self.guessing = True
+
+    def rlotto(self):
+        self.random_number = random.sample(range(1, 71), self.guesses)
+
+    def reveal(self):
+        if sorted(self.guess) == sorted(self.random_number):
+            return True
+        else:
+            return False
 
 ticket = Tickets()
 
@@ -72,8 +89,15 @@ def draw_result():
         screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, 
                                    SCREEN_HEIGHT // 2 - text_surface.get_height() // 2))
 
+# Function to draw the player's current money
+def draw_money(money):
+    money_text = f"Money: ${money}"
+    text_surface = FONT.render(money_text, True, YELLOW)
+    screen.blit(text_surface, (SCREEN_WIDTH - text_surface.get_width() - NUM_MARGIN, NUM_MARGIN))
+
 # Main game loop
 def main():
+    money = STARTING_MONEY  # Starting money for the player
     ticket.rlotto()  # Generate random numbers once at the beginning
     clock = pygame.time.Clock()
     
@@ -106,6 +130,15 @@ def main():
                 if len(ticket.guess) == ticket.guesses:
                     ticket.guessing = False
 
+        # Deduct money when guessing is finished
+        if not ticket.guessing and money >= TICKET_COST:
+            money -= TICKET_COST  # Deduct cost for playing a ticket
+            ticket.guessing = True  # Restart guessing
+            ticket.guess = []  # Clear previous guesses
+            ticket.rlotto()  # Generate a new set of random numbers
+        elif money <= 0:
+            ticket.guessing = False  # End the game when out of money
+
         # Draw the lottery numbers
         draw_numbers()
 
@@ -118,6 +151,16 @@ def main():
 
         # Draw the result if the guessing is done
         draw_result()
+
+        # Draw current money
+        draw_money(money)
+
+        # End the game if the player has no money
+        if money <= 0:
+            game_over_text = "GAME OVER! You ran out of money."
+            text_surface = FONT.render(game_over_text, True, RED)
+            screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, 
+                                       SCREEN_HEIGHT // 2 - text_surface.get_height() // 2 + 50))
 
         # Update display
         pygame.display.flip()
